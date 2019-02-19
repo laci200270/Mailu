@@ -1,4 +1,18 @@
-FROM alpine:3.8
+FROM arm64v8/alpine:3.8
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.8/main' > /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.8/community' >> /etc/apk/repositories
+RUN apk update
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/main' > /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/community' >> /etc/apk/repositories
+RUN apk update
+RUN apk upgrade
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' > /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
+RUN apk update
+RUN apk upgrade
+
+
+
 # python3 shared with most images
 RUN apk add --no-cache \
     python3 py3-pip git bash \
@@ -19,4 +33,3 @@ VOLUME ["/var/lib/rspamd"]
 
 CMD /start.py
 
-HEALTHCHECK --start-period=350s CMD curl -f -L http://localhost:11334/ || exit 1

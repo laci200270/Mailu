@@ -7,7 +7,7 @@ RUN apk add --no-cache \
 RUN pip3 install git+https://github.com/usrpro/MailuStart.git#egg=mailustart
 # Image specific layers under this line
 RUN apk add --no-cache \
-  dovecot dovecot-pigeonhole-plugin rspamd-client bash \
+  dovecot dovecot-pigeonhole-plugin bash \
   && pip3 install podop \
   && mkdir /var/lib/dovecot
 
@@ -19,4 +19,3 @@ VOLUME ["/data", "/mail"]
 
 CMD /start.py
 
-HEALTHCHECK --start-period=350s CMD echo QUIT|nc localhost 110|grep "Dovecot ready."
